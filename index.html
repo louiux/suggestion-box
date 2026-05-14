@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATE BOX</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <h1>♥ DATE BOX ♥</h1>
+  <p class="subtitle">INSERT DATE IDEA TO CONTINUE</p>
+
+  <input id="ideaInput" placeholder="e.g. picnic" />
+
+  <button class="btn-primary" onclick="addIdea()">▶ ADD IDEA</button>
+
+  <div id="result"></div>
+
+  <div class="buttons-bottom">
+    <button class="btn-surprise" onclick="surpriseMe()">★ SURPRISE ME</button>
+    <hr class="btn-divider">
+    <button class="btn-secondary" onclick="goToList()">≡ VIEW ALL IDEAS</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, addDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVa3FTSYqKKTYqmSiYVm327U_i7v9HHT0",
+    authDomain: "suggestion-box-lb73.firebaseapp.com",
+    projectId: "suggestion-box-lb73",
+    storageBucket: "suggestion-box-lb73.firebasestorage.app",
+    messagingSenderId: "70767280613",
+    appId: "1:70767280613:web:8b386e182ceb84a3c0ef0c",
+    measurementId: "G-246T81VGHT"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  const input  = document.getElementById("ideaInput");
+  const result = document.getElementById("result");
+
+  input.addEventListener("keydown", e => { if (e.key === "Enter") window.addIdea(); });
+
+  function setInputState(state) {
+    input.classList.remove("success", "duplicate");
+    if (state) {
+      input.classList.add(state);
+      setTimeout(() => input.classList.remove(state), 1500);
+    }
+  }
+
+  window.addIdea = async function () {
+    const text = input.value.trim();
+    if (!text) return;
+
+    const snapshot = await getDocs(collection(db, "ideas"));
+    const exists = snapshot.docs.some(d => d.data().text.toLowerCase() === text.toLowerCase());
+
+    if (exists) {
+      setInputState("duplicate");
+      result.innerText = "ALREADY ON THE LIST!";
+      return;
+    }
+
+    await addDoc(collection(db, "ideas"), { text, created: Date.now() });
+    setInputState("success");
+    input.value = "";
+    result.innerText = "♥ SAVED!";
+    setTimeout(() => result.innerText = "", 2000);
+  };
+
+  window.surpriseMe = async function () {
+    result.innerText = "LOADING...";
+    const snapshot = await getDocs(collection(db, "ideas"));
+    const ideas = snapshot.docs.filter(d => !d.data().completed).map(d => d.data().text);
+
+    if (!ideas.length) { result.innerText = "NO IDEAS YET :("; return; }
+
+    setTimeout(() => {
+      result.innerText = "★ " + ideas[Math.floor(Math.random() * ideas.length)].toUpperCase();
+    }, 600);
+  };
+
+  window.goToList = function () { window.location.href = "list.html"; };
+</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+/* ── Reset ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ── */
+body {
+  font-family: 'Press Start 2P', monospace;
+  background: #0d0014;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* list page overrides base body layout */
+body.list-page {
+  display: block;
+  text-align: center;
+  padding: 32px 20px 60px;
+}
+
+/* scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,0.13) 2px, rgba(0,0,0,0.13) 4px
+  );
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── Typography ── */
+h1 {
+  font-size: 17px;
+  color: #ff2d78;
+  text-shadow: 0 0 10px #ff2d78, 0 0 24px #ff2d78;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: 3px;
+}
+
+.subtitle {
+  font-size: 0.6rem;
+  color: #00e5ff;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  letter-spacing: 2px;
+  line-height: 1rem;
+  text-shadow: 0 0 8px #00e5ff;
+}
+
+/* ── Index: App card ── */
+.app {
+  background: #1a0028;
+  padding: 36px 28px 32px;
+  width: 360px;
+  min-height: 500px;
+  border: 4px solid #ff2d78;
+  box-shadow: 6px 6px 0 0 #8b0038, inset 0 0 40px rgba(255,45,120,0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Index: Input ── */
+input {
+  width: 100%;
+  padding: 12px 10px;
+  background: #0d0014;
+  border: 3px solid #00e5ff;
+  color: #00e5ff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  outline: none;
+  line-height: 1.8;
+  
+  transition: border-color 0.1s, box-shadow 0.1s;
+}
+
+input::placeholder { color: #2a2a4a; }
+
+input:focus {
+  border-color: #ffe600;
+  box-shadow: 0 0 14px rgba(255,230,0,0.25);
+}
+
+input.success {
+  border-color: #00ff41;
+  box-shadow: 0 0 14px rgba(0,255,65,0.35);
+}
+
+input.duplicate {
+  border-color: #ff2d78;
+  box-shadow: 0 0 14px rgba(255,45,120,0.35);
+  animation: shake 0.25s steps(4);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px); }
+}
+
+/* ── Index: Buttons ── */
+.buttons-bottom { display: flex; flex-direction: column; gap: 12px; }
+.btn-divider    { border: none; border-top: 2px dashed #2a2a4a; margin: 4px 0; }
+
+button {
+  width: 100%;
+  padding: 14px 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  cursor: pointer;
+  border: 3px solid;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  transition: transform 0.05s, box-shadow 0.05s;
+  
+}
+
+button:hover  { filter: brightness(1.15); }
+button:active { transform: translate(4px, 4px); box-shadow: none !important; }
+
+.btn-primary {
+  background: #ff2d78;
+  color: #fff;
+  border-color: #ff2d78;
+  box-shadow: 4px 4px 0 0 #8b0038;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  margin-top: 10px;
+}
+
+.btn-surprise {
+  background: #ffe600;
+  color: #1a0028;
+  border-color: #ffe600;
+  box-shadow: 4px 4px 0 0 #7a6a00;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #00e5ff;
+  border-color: #00e5ff;
+  box-shadow: 4px 4px 0 0 #005f6b;
+  text-shadow: 0 0 8px #00e5ff;
+  margin-top: 0;
+}
+
+/* ── Index: Result ── */
+#result {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  font-size: 8px;
+  color: #00ff41;
+  text-align: center;
+  text-shadow: 0 0 10px #00ff41;
+  line-height: 2;
+}
+
+/* ── List page: Cards ── */
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.card {
+  background: #1a0028;
+  border: 3px solid #00e5ff;
+  box-shadow: 4px 4px 0 0 #005f6b;
+  width: 340px;
+  padding: 14px 14px 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  animation: popIn 0.15s steps(4) forwards;
+}
+
+.card.done {
+  border-color: #2a2a4a;
+  box-shadow: 4px 4px 0 0 #111;
+  opacity: 0.45;
+}
+
+.card.done .idea-text {
+  text-decoration: line-through;
+  color: #444;
+  text-shadow: none;
+}
+
+.idea-text {
+  flex: 1;
+  font-size: 7px;
+  color: #00e5ff;
+  text-shadow: 0 0 6px #00e5ff;
+  line-height: 2;
+  word-break: break-word;
+}
+
+/* ── List page: Tick button ── */
+.tick-btn {
+  background: transparent;
+  border: 3px solid #00e5ff;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.1s, color 0.1s;
+}
+
+.tick-btn:hover { background: #00e5ff22; color: #00ff41; }
+
+.card.done .tick-btn {
+  background: #00ff41;
+  border-color: #00ff41;
+  color: #0d0014;
+  box-shadow: none;
+}
+
+/* ── List page: Empty state ── */
+.empty {
+  font-size: 8px;
+  color: #2a2a4a;
+  margin-top: 40px;
+  line-height: 2.5;
+}
+
+/* ── List page: Back button ── */
+.back-btn {
+  margin-top: 32px;
+  padding: 14px 20px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  cursor: pointer;
+  background: #ff2d78;
+  color: #fff;
+  border: 3px solid #ff2d78;
+  box-shadow: 4px 4px 0 0 #8b0038;
+  letter-spacing: 1px;
+  transition: transform 0.05s, box-shadow 0.05s;
+  width: auto;
+}
+
+.back-btn:hover  { filter: brightness(1.15); }
+.back-btn:active { transform: translate(4px, 4px); box-shadow: none; }
+
+/* ── Animations ── */
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
