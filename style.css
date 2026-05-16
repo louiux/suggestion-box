@@ -1,5 +1,10 @@
 /* ── Reset ── */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='20'%3E%3Cpolygon points='0,0 0,15 4,11 7,18 9,17 6,10 11,10' fill='%231a0028' stroke='%231a0028' stroke-width='2.5' stroke-linejoin='miter' shape-rendering='crispEdges'/%3E%3Cpolygon points='0,0 0,15 4,11 7,18 9,17 6,10 11,10' fill='%23ff2d78' shape-rendering='crispEdges'/%3E%3C/svg%3E") 0 0, default;
+}
 
 /* ── Base ── */
 body {
@@ -113,12 +118,15 @@ button {
   padding: 14px 10px;
   font-family: 'Press Start 2P', monospace;
   font-size: 8px;
-  cursor: pointer;
   border: 3px solid;
   letter-spacing: 1px;
   line-height: 1.4;
   transition: transform 0.05s, box-shadow 0.05s;
   
+}
+
+button, a, input, textarea, label, select {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='20'%3E%3Cpolygon points='0,0 0,15 4,11 7,18 9,17 6,10 11,10' fill='%231a0028' stroke='%231a0028' stroke-width='2.5' stroke-linejoin='miter' shape-rendering='crispEdges'/%3E%3Cpolygon points='0,0 0,15 4,11 7,18 9,17 6,10 11,10' fill='%23ff2d78' shape-rendering='crispEdges'/%3E%3C/svg%3E") 0 0, default;
 }
 
 button:hover  { filter: brightness(1.15); }
@@ -138,6 +146,7 @@ button:active { transform: translate(4px, 4px); box-shadow: none !important; }
   color: #1a0028;
   border-color: #ffe600;
   box-shadow: 4px 4px 0 0 #7a6a00;
+  margin-top: 10px;
 }
 
 .btn-secondary {
@@ -155,7 +164,7 @@ button:active { transform: translate(4px, 4px); box-shadow: none !important; }
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 16px;
+  margin-top: 28px;
   font-size: 8px;
   color: #00ff41;
   text-align: center;
@@ -258,6 +267,259 @@ button:active { transform: translate(4px, 4px); box-shadow: none !important; }
 
 .back-btn:hover  { filter: brightness(1.15); }
 .back-btn:active { transform: translate(4px, 4px); box-shadow: none; }
+
+/* ── Calendar button on card ── */
+.cal-btn {
+  background: transparent;
+  border: 3px solid #ffe600;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.1s;
+}
+.cal-btn:hover { background: #ffe60022; }
+
+/* ── Calendar modal buttons ── */
+.btn-gcal {
+  width: 100%;
+  padding: 12px 6px;
+  background: #ff2d78;
+  color: #fff;
+  border: 3px solid #ff2d78;
+  box-shadow: 3px 3px 0 0 #8b0038;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: transform 0.05s, box-shadow 0.05s;
+}
+
+.btn-ical {
+  width: 100%;
+  padding: 12px 6px;
+  background: #00e5ff;
+  color: #0d0014;
+  border: 3px solid #00e5ff;
+  box-shadow: 3px 3px 0 0 #005f6b;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: transform 0.05s, box-shadow 0.05s;
+}
+
+.btn-gcal:active,
+.btn-ical:active { transform: translate(3px, 3px); box-shadow: none !important; }
+
+/* date + time inputs in modal */
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  padding: 12px 10px;
+  background: #0d0014;
+  border: 2px solid #00e5ff;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  outline: none;
+  margin-bottom: 16px;
+  color-scheme: dark;
+}
+
+/* ── Memory modal ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: #1a0028;
+  border: 4px solid #ffe600;
+  box-shadow: 6px 6px 0 0 #7a6a00;
+  padding: 28px 24px;
+  width: 320px;
+}
+
+.modal-heading {
+  font-size: 9px;
+  color: #ffe600;
+  text-shadow: 0 0 10px #ffe600;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.modal-idea {
+  font-size: 6px;
+  color: #00e5ff;
+  text-shadow: 0 0 6px #00e5ff;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.8;
+  word-break: break-word;
+}
+
+.modal label {
+  font-size: 6px;
+  color: #ff2d78;
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+
+.modal input[type="text"],
+.modal textarea {
+  width: 100%;
+  background: #0d0014;
+  border: 2px solid #00e5ff;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 10px;
+  margin-bottom: 16px;
+  outline: none;
+  resize: none;
+  line-height: 1.8;
+  transition: border-color 0.1s;
+}
+
+.modal input[type="text"]:focus,
+.modal textarea:focus { border-color: #ffe600; }
+
+.btn-upload {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 2px dashed #00e5ff;
+  color: #00e5ff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  transition: background 0.1s;
+}
+
+.btn-upload:hover { background: #00e5ff11; }
+
+.modal-preview {
+  width: 100%;
+  max-height: 120px;
+  object-fit: cover;
+  border: 2px solid #ff2d78;
+  margin-bottom: 16px;
+  display: none;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-save {
+  flex: 1;
+  padding: 12px 6px;
+  background: #00ff41;
+  color: #0d0014;
+  border: 3px solid #00ff41;
+  box-shadow: 3px 3px 0 0 #007a1e;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: transform 0.05s, box-shadow 0.05s;
+}
+
+.btn-skip {
+  flex: 1;
+  padding: 12px 6px;
+  background: transparent;
+  color: #666;
+  border: 3px solid #333;
+  box-shadow: 3px 3px 0 0 #111;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: transform 0.05s, box-shadow 0.05s;
+}
+
+.btn-save:active,
+.btn-skip:active { transform: translate(3px, 3px); box-shadow: none !important; }
+
+/* ── Memories page ── */
+.memories-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.memory-card {
+  background: #1a0028;
+  border: 3px solid #ff2d78;
+  box-shadow: 4px 4px 0 0 #8b0038;
+  width: 360px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  text-align: left;
+  animation: popIn 0.15s steps(4) forwards;
+}
+
+.memory-content { flex: 1; min-width: 0; }
+
+.memory-title {
+  font-size: 7px;
+  color: #ff2d78;
+  text-shadow: 0 0 8px #ff2d78;
+  margin-bottom: 8px;
+  line-height: 1.8;
+  word-break: break-word;
+}
+
+.memory-date {
+  font-size: 6px;
+  color: #ffe600;
+  text-shadow: 0 0 6px #ffe600;
+  margin-bottom: 8px;
+}
+
+.memory-notes {
+  font-size: 6px;
+  color: #aaa;
+  line-height: 2.2;
+  word-break: break-word;
+}
+
+.memory-photo {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  object-fit: cover;
+  border: 2px solid #ff2d78;
+}
+
+.btn-memories {
+  background: #00ff41;
+  color: #0d0014;
+  border-color: #00ff41;
+  box-shadow: 4px 4px 0 0 #007a1e;
+}
 
 /* ── Animations ── */
 @keyframes popIn {
